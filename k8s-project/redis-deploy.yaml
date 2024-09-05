@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: redis-depolyment
+spec:
+  replicas: 1
+  strategy:
+    rollingUpdate:
+      maxUnavailable: 25%
+      maxSurge: 25%
+    type: RollingUpdate
+  selector:
+    matchLabels:
+      name: redis-pod
+  template:
+    metadata:
+      labels:
+        name: redis-pod
+    spec:
+      containers:
+        - name: redis-container
+          image: redis
+          ports:
+            - containerPort: 6379
+    

@@ -1,0 +1,40 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: wordpress-depolyment
+spec:
+  replicas: 3
+  strategy:
+    rollingUpdate:
+      maxUnavailable: 25%
+      maxSurge: 25%
+    type: RollingUpdate
+  selector:
+    matchLabels:
+      name: wordpress-pod
+  template:
+    metadata:
+      labels:
+        name: wordpress-pod
+    spec:
+      containers:
+        - name: wordpress-container
+          image: wordpress
+          ports:
+            - containerPort: 80
+          env:
+            - name: WORDPRESS_DB_HOST
+              value: mysql-service    
+            - name: WORDPRESS_DB_PASSWORD
+              value: mustafiz_passwrd
+            - name: WORDPRESS_DB_USER
+              value: mustafiz
+            - name: WORDPRESS_CONFIG_EXTRA
+              value: define('WP_REDIS_HOST','redis');
+          volumeMounts:
+            - mountPath: /var/www/html
+              name: wp-storage
+      volumes:
+        - name: wp-storage
+          persistentVolumeClaim:
+            claimName: pvc-wp
