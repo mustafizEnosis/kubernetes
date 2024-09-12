@@ -16,6 +16,20 @@ spec:
     metadata:
       labels:
         name: mysql-pod
+      annotations:
+        ad.datadoghq.com/mysql-container.checks: |
+          {
+            "mysql": {
+              "instances": [
+                {
+                  "server": "%%host%%", 
+                  "username": "datadog",
+                  "password": "12345678"
+                }
+              ]
+            }
+          }
+        ad.datadoghq.com/mysql-container.logs: '[{"source": "mysql", "service": "mysql"}]'
     spec:
       containers:
         - name: mysql-container

@@ -1,0 +1,12 @@
+datadog:
+  apiKeyExistingSecret: datadog
+  site: datadoghq.com
+  serviceMonitoring:
+    enabled: true
+  networkMonitoring:
+    enabled: true
+  kubelet:
+    tlsVerify: false
+  logs:
+    enabled: true
+    containerCollectAll: true

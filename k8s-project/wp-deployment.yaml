@@ -16,6 +16,9 @@ spec:
     metadata:
       labels:
         name: wordpress-pod
+        tags.datadoghq.com/env: 'kubernetes-local'
+        tags.datadoghq.com/service: 'wordpress-service'
+        tags.datadoghq.com/version: '1.0.10'
     spec:
       containers:
         - name: wordpress-container
@@ -30,11 +33,38 @@ spec:
             - name: WORDPRESS_DB_USER
               value: mustafiz
             - name: WORDPRESS_CONFIG_EXTRA
-              value: define('WP_REDIS_HOST','redis');
+              value: define('WP_REDIS_HOST','redis'); define('WP_SITEURL', 'http://hello-world.example:30080');
+            - name: DD_ENV
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.labels['tags.datadoghq.com/env']
+            - name: DD_SERVICE
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.labels['tags.datadoghq.com/service']
+            - name: DD_VERSION
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.labels['tags.datadoghq.com/version']
+            - name: DD_KUBELET_TLS_VERIFY
+              value: 'false'
+            - name: DD_LOGS_INJECTION
+              value: 'true'
+            - name: DD_TRACE_SAMPLE_RATE
+              value: '1'
+            - name: DD_PROFILING_ENABLED
+              value: '1'
+            - name: DD_AGENT_HOST
+              value: daatadog-agent-2
           volumeMounts:
             - mountPath: /var/www/html
               name: wp-storage
+            - name: apmsocketpath
+              mountPath: /var/run/datadog
       volumes:
         - name: wp-storage
           persistentVolumeClaim:
             claimName: pvc-wp
+        - hostPath:
+            path: /var/run/datadog/
+          name: apmsocketpath
