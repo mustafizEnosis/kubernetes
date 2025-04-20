@@ -1,0 +1,9 @@
+- hosts: localhost
+  connection: local
+  vars:
+    dialogue: "The name is Bourne, James Bourne!"
+  tasks:
+    - name: "Template with text"
+      template:
+        src: "/home/bob/playbooks/replace/templates/name.txt.j2"
+        dest: "/tmp/name.txt"
