@@ -55,7 +55,7 @@ spec:
             - name: DD_PROFILING_ENABLED
               value: '1'
             - name: DD_AGENT_HOST
-              value: daatadog-agent-2
+              value: datadog-agent-2
           volumeMounts:
             - mountPath: /var/www/html
               name: wp-storage

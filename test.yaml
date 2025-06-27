@@ -42,7 +42,7 @@ spec:
       securityContext: {}
       terminationGracePeriodSeconds: 30
       imagePullSecrets:
-        - private-reg-cred
+      - name: private-reg-cred
 status:
   availableReplicas: 2
   conditions:

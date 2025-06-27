@@ -31,4 +31,4 @@ spec:
     - effect: NoSchedule
       key: spray
       value: mortein
-      operator: Equals
+      operator: Equal

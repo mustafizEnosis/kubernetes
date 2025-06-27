@@ -1,0 +1,24 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: secret-1401
+spec:
+  containers:
+    - name: secret-admin
+      image: busybox
+      envFrom:
+        - secretRef:
+            name: dotfile-secret
+      command:
+        - sleep
+      args:
+        - "4800"
+      volumeMounts:
+        - mountPath: /etc/secret-volume
+          name: secret-volume
+          readOnly: true
+  volumes:
+    - hostPath:
+        path: /etc/secret-volume
+        type: 
+      name: webapp-volume

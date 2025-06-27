@@ -1,0 +1,15 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  creationTimestamp: "2024-10-06T16:33:44Z"
+  name: pvviewer-role-binding
+  resourceVersion: "2499"
+  uid: 82c08876-e610-4f10-b289-f698dcf10be4
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: pvviewer-role
+subjects:
+- kind: ServiceAccount
+  name: pvviewer
+  namespace: default

@@ -9,4 +9,5 @@ spec:
     - ReadWriteMany
   hostPath:
     path: /pv/log
+    type: DirectoryOrCreate
   persistentVolumeReclaimPolicy: Retain
